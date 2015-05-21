@@ -1,0 +1,357 @@
+<script>
+    $(document).ready(function () {
+        var resizeTable = function setTableHeight() {
+            $(".table-wrapper table").height($(".test-selection-wrapper").height() - 20);
+        }
+
+        resizeTable();
+
+        $(window).resize(function () {
+            resizeTable()
+        });
+    });
+</script>
+
+
+<script type="text/ng-template" id="queueContent.html">
+    <div class="modal-header">
+        <h4 class="modal-title" style="text-align: center">Are you sure you want to dequeue this request?</h4>
+    </div>
+    <div class="modal-body">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<style>
+    table .label {
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    .widget-fixed {
+        position: fixed;
+        z-index: 100;
+        bottom: 20px;
+        right: 15px;
+    }
+
+    .recycle-bin {
+        font-size: 60px;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .widget-fixed button {
+        box-shadow: 5px -4px 17px rgba(0,0,0,0.4);
+    }
+
+    .widget-fixed .btn-group {
+        position: fixed;
+        top: 50%;
+        right: 0px;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+
+<!--modal-->
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+
+<div st-table="rowCollection" style="height: 100%; overflow: auto"><!-- Sidebar -->
+
+    <!-- End Sidebar -->
+    <!-- Pills and search -->
+    <div class="col-xs-12 right-container"
+         style="z-index: 30;margin-right: 0px;padding-right: 0px; padding-left: 0px; float: left">
+        <div class="right-scrollable-container">
+            <div class="row-fluid right-header" style="margin-left: 15px;">
+                <div class="col-lg-3">
+
+
+                    <form class="form-inline">
+                        <div class="combobox-container">
+                            <div class="input-group">
+                                <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown">Search</span>
+                                <select class="combobox form-control" style="display: none;">
+                                    <option value="" selected="selected">Type to search</option>
+                                    <option value="AL">my last search 1</option>
+                                    <option value="AK">my last search 2</option>
+                                    <option value="AZ">my last search 3</option>
+                                    <option value="AL">my last search 4</option>
+                                    <option value="AK">my last search 5</option>
+                                </select>
+
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('.combobox').combobox();
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="col-lg-6" style="text-align: center;">
+                    <div class="btn-group">
+                        <button type="button" ng-disabled="QueueButtonOff" class="btn btn-default outline"
+                                ng-model="return" ng-click="return()">Return To Monitor
+                        </button>
+
+                    </div>
+                </div>
+                <div class="col-lg-3" style="  position: relative;">
+                    <ul class="pagination bootpag" style="float: right; margin-right: 30px;">
+                        <li data-lp="1" class="prev disabled"><a href="javascript:void(0);">«</a></li>
+                        <li data-lp="1" class="active"><a href="javascript:void(0);">1</a></li>
+                        <li data-lp="2"><a href="javascript:void(0);">2</a></li>
+                        <li data-lp="3"><a href="javascript:void(0);">3</a></li>
+                        <li data-lp="4"><a href="javascript:void(0);">4</a></li>
+                        <li data-lp="5"><a href="javascript:void(0);">5</a></li>
+                        <li data-lp="2" class="next"><a href="javascript:void(0);">»</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="test-selection-wrapper" style="position: relative">
+                <div class="row-fluid test-selection-content">
+                    <div class="container-fluid">
+                        <div class="table-wrapper" style="position: relative">
+                            <div class="row-fluid">
+                                <div class="col-lg-12">
+                                    <table class="table table-hover table-condensed">
+                                        <thead>
+
+                                        <!--<div class="search-group">-->
+                                        <!--<tr>-->
+                                        <!--<th colspan="1"><input st-search="Name" placeholder="Name search" class="input-sm form-control" type="search"/></th>-->
+                                        <!--&lt;!&ndash;<th colspan="1"><input st-search="Technology" placeholder="tech. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<th colspan="1"><input st-search="Program" placeholder="prog. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<th colspan="1"><input st-search="CycleType" placeholder="cycle type search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                        <!--<th colspan="1"><input st-search="Owner" placeholder="Owner search" class="input-sm form-control" type="search"/></th>-->
+                                        <!--<th colspan="1"><input st-search="CreatedTime" placeholder="Created Time Search" class="input-sm form-control" type="search"/></th>-->
+                                        <!--&lt;!&ndash;<th colspan="1"><input st-search="Status" placeholder="st. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<th colspan="1"><input st-search="Verdict" placeholder="ve. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                        <!--</tr>-->
+                                        <!--</div>-->
+
+                                        <!--<tr  ng-class="{pointer: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">-->
+                                        <!--<th><input type="checkbox" ng-click="selectAll()"></th>-->
+                                        <!--ng-checked="isSelectedAll()"-->
+
+                                        <tr ng-class="{pointer: hover}" ng-mouseenter="hover = true"
+                                            ng-mouseleave="hover = false">
+                                            <th></th>
+                                            <th st-sort="Name">Name</th>
+                                            <th st-sort="Technology">Technology</th>
+                                            <th st-sort="Program">Program</th>
+                                            <th st-sort="CycleType">CycleType</th>
+                                            <th st-sort="TestBed">TestBed</th>
+                                            <th st-sort="Owner">Owner</th>
+                                            <th id=createdTimeTr st-sort="CreatedTime">CreatedTime</th>
+                                            <!--<th st-sort="Status">Status</th>-->
+                                            <!--<th st-sort="Verdict">Verdict</th>-->
+                                        </tr>
+
+
+                                        </thead>
+                                        <tbody ui-sortable="sortableOptions" ng-model="rowCollection">
+                                        <!--ng-class="getSelectedClass(row.id)-->
+                                        <tr st-select-row="row" st-select-mode="single"
+                                            ng-repeat="row in rowCollection" ng-init="$last && sortByTime()"
+                                            ng-class="{pointer: hover}" ng-mouseenter="hover = true; markRowDraggable($event)"
+                                            ng-mouseleave="hover = false; unMarkRowDraggable($event)">
+
+                                            <!--<tr ng-class="{pointer: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">-->
+                                            <!--{pointer: hover};-->
+                                            <!--resize-vertical-->
+                                            <!--<td> <input type="checkbox" name="selected" ng-checked="isSelected(row.id)" ng-click="updateSelection($event, row.id)"></td>-->
+                                            <td> <i class="glyphicon glyphicon-move" style="visibility: hidden;"></i></td>
+
+                                            <td>{{row.Name | uppercase}}</td>
+                                            <td>{{row.Technology | uppercase}}</td>
+                                            <td>{{row.Program | uppercase}}</td>
+                                            <td>{{row.CycleType | uppercase}}</td>
+                                            <!--<td>{{row.TestBed | uppercase}}</td>-->
+                                            <td>
+                                                <div><span id="searchItem" rel="popover"> {{row.TestBed | uppercase}}
+                                                    <a id="popoverData" class="btn" href="#"
+                                                       data-content="Popover with data-trigger"
+                                                       rel="popover" data-placement="bottom" data-original-title="Title"
+                                                       data-trigger="hover"></a></span></div>
+                                            </td>
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $("#searchItem").popover({
+                                                        trigger: "hover",
+                                                        html: true,
+                                                        animation: true,
+                                                        content: "ip: 127.0.0.1",
+                                                        placement: "bottom"
+                                                    });
+                                                });
+                                            </script>
+                                            <td>{{row.Owner | uppercase}}</td>
+                                            <td>{{row.CreatedTime | uppercase}}</td>
+                                            <!--<td><span-->
+                                            <!--ng-class="colorStatus(row.Verdict)">{{row.Status | uppercase}}</span>-->
+                                            <!--</td>-->
+                                            <!--<td><span-->
+                                            <!--ng-class="colorVerdict(row.Verdict)">{{row.Verdict | uppercase}}</span>-->
+                                            <!--</td>-->
+                                        </tr>
+                                        </tbody>
+                                        <tfoot></tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-1 sidebar hidden-md hidden-sm hidden-xs" style="  position: fixed;
+  height: 100%;
+  right: 0%;
+  width: 230px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 500px;">
+        <div class="sidebar-content-right" style="margin-top: -115px;">
+
+            <!--ng-click="dequeue()"-->
+
+            <!-- Default panel contents -->
+            <!--<div class="panel-heading ">-->
+            <!--<span class="pull-right glyphicon glyphicon-filter"><i class=""></i></span>-->
+            <!--<h3 class="panel-title">Filtering Options</h3>-->
+            <!--</div>-->
+            <div class="panel-body fixed-panel">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="widget-fixed">
+    <div class="btn-group" style="transform: rotate(90deg);">
+        <button type="button" ng-disabled=false class="btn btn-default"
+                ng-model="down" ng-click="down()"><span class="glyphicon glyphicon-backward"></span>
+        </button>
+        <button type="button" ng-disabled=false class="btn btn-default"
+                ng-model="up" ng-click="up()"><span class="glyphicon glyphicon-forward"></span>
+        </button>
+
+    </div>
+
+    <div class="recycle-bin">
+        <i class="fa fa-trash"></i>
+    </div>
+</div>
+
+
+<!--<div class="col-lg-2">-->
+<!--&lt;!&ndash;<div collapse="isCollapsedStatistics">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="panel panel-default">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="panel-heading">&ndash;&gt;-->
+<!--&lt;!&ndash;<span class="pull-right glyphicon glyphicon-stats"><i class=""></i></span>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<h3 class="panel-title">Statistics</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="panel-body">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="charts">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="row-fluid" style="margin: 0; padding: 0;">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="completed-chart" style="height: 160px">&ndash;&gt;-->
+<!--&lt;!&ndash;<pie-chart options="options2" data="completed"></pie-chart>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="succeed-chart" style="height:160px">&ndash;&gt;-->
+<!--&lt;!&ndash;<pie-chart options="options1" data="failed"></pie-chart>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div collapse="isCollapsedFiltering">&ndash;&gt;-->
+
+
+<!--</div>-->
+<!--<div class="col-lg-10">-->
+
+
+<!--&lt;!&ndash;<div class="col-lg-2"></div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;<div class="filter-sidebar col-lg-2">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="panel panel-default">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash; Default panel contents &ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="panel-heading">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<span class="pull-right glyphicon glyphicon-stats"><i class=""></i></span>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;<h3 class="panel-title">statistics</h3>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="panel-body">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="users">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<h4 style="text-align: center"><span class="glyphicon glyphicon-user"></span> 78 Connected&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</h4>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="charts">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="row-fluid" style="margin: 0; padding: 0;">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="completed-chart" style="height: 115px">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<pie-chart options="options" data="completed"></pie-chart>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="succeed-chart" style="height:115px">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<pie-chart options="options" data="succeed"></pie-chart>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;<div class="row-fluid">&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash; &ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
+<!--<div class="col-lg-2">-->
+<!--<div class="charts" style="-->
+<!--width: 200px;-->
+<!--height: 100px;-->
+<!--position: fixed;-->
+<!--top: 19%;-->
+<!--right: 18%;">-->
+<!--<div class="users" style="position: absolute;top: -60%;left: 25%;">-->
+<!--<h5><span class="glyphicon glyphicon-user"></span> 78 Connected</h5>-->
+<!--</div>-->
+<!--<pie-chart options="options" data="completed"></pie-chart>-->
+<!--<pie-chart options="options" data="succeed"></pie-chart>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+

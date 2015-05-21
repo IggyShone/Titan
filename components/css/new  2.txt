@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel="stylesheet" href="css/monitor.css"/>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!--jquery pagination-->
+    <script>
+
+        //        $('document').ready(function() {
+        //            $('#popoverData').popover();
+        //            $('#popoverOption').popover({trigger: "hover"});
+        //        });
+
+    </script>
+
+
+    <style type="text/css">
+
+        * {
+            font-family: 'Roboto'
+        }
+
+        .input-group-btn-vertical > .btn {
+            display: block;
+            float: none;
+            width: 100%;
+            max-width: 100%;
+            padding: 8px;
+            margin-left: -1px;
+            position: relative;
+            border-radius: 0;
+        }
+
+        .input-group-btn-vertical > .btn:first-child {
+            border-top-right-radius: 4px;
+        }
+
+        .input-group-btn-vertical > .btn:last-child {
+            margin-top: -2px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .input-group-btn-vertical i {
+            position: absolute;
+            top: 0;
+            left: 4px;
+        }
+
+        .affix-second-toolbar {
+            background-color: white;
+            margin: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 50px;
+            padding: 0 14px 0 14px;
+            z-index: 100;
+            position: fixed;
+            top: 50px;
+        }
+
+        .right-container {
+            width: 75%;
+            float: right;
+            height: 100%;
+            padding-top: 100px;
+        }
+
+        .right-header {
+            height: 70px;
+            padding-top: 16px;
+            border-bottom: 1px solid #eee;
+            /*box-shadow: 0 4px 10px -4px #000;*/
+            position: relative;
+            z-index: 19;
+        }
+
+        .table-wrapper {
+            height: 100%;
+            overflow-y: auto;
+            height: calc(100% - 70px);
+        }
+
+        .right-scrollable-container {
+            height: 100%;
+        }
+
+        .sidebar {
+            border-right: 1px solid #eee;
+            /*overflow: hidden;*/
+            width: 15%;
+            padding-top: 100px;
+            float: left;
+            height: auto;
+            z-index: 20;
+            /*box-shadow: 4px 0 5px -2px #888;*/
+        }
+
+        .sidebar-content {
+            margin: 15px;
+            height: 100%;
+        }
+
+
+        .btn-success {
+            background-color: #fcf8e3;
+            color:black;
+        }
+
+        .btn-success:hover{
+            background-color: #337ab7;
+        }
+
+
+        .header-fixed {
+            width: 100%
+        }
+
+
+        /*thead, tbody, tr, td, th { display: block; }*/
+
+        /*tr:after {*/
+        /*content: ' ';*/
+        /*display: block;*/
+        /*visibility: hidden;*/
+        /*clear: both;*/
+        /*}*/
+
+
+        /*tbody {*/
+        /*height: 120px;*/
+        /*overflow-y: auto;*/
+        /*}*/
+
+
+        .btn-primary{
+
+            background-color: #E6E6E6;
+            border-color: lightgray;
+            color:black;
+        }
+
+
+        .btn-primary:hover {
+            background-color: #337ab7;
+        }
+
+        .btn-primary:focus {
+            background-color: #337ab7;
+        }
+
+        .btn-primary:active {
+            background-color: #337ab7;
+        }
+
+        .navbar {
+            height: 20px;
+        }
+
+        .filter-sidebar {
+        }
+
+        .st-selected {
+            background-color: #E6E6E6;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        /*.sortable tr {*/
+        /*cursor: pointer;*/
+        /*}*/
+        #reportrange {
+            background: #fff;
+            cursor: pointer;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            display: inline-block;
+            padding: 4px 6px;
+            margin-bottom: 10px;
+            color: #555;
+            vertical-align: middle;
+            border-radius: 4px;
+            max-width: 100%;
+            line-height: 28px;
+            cursor: text;
+            min-width: 100%;
+        }
+
+        .pagination {
+            width: 242px;
+            position: relative;
+            top: 0px;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+
+</head>
+<body style="height: 100%">
+
+
+
+<div st-table="rowCollection">
+
+    <div class="row-fluid clearfix">
+        <div class="col-lg-2">
+
+            <!--<div collapse="isCollapsedStatistics">-->
+            <!--<div class="panel panel-default">-->
+            <!--<div class="panel-heading">-->
+            <!--<span class="pull-right glyphicon glyphicon-stats"><i class=""></i></span>-->
+
+            <!--<h3 class="panel-title">Statistics</h3>-->
+            <!--</div>-->
+            <!--<div class="panel-body">-->
+            <!--<div class="charts">-->
+            <!--<div class="row-fluid" style="margin: 0; padding: 0;">-->
+            <!--&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;-->
+            <!--<div class="completed-chart" style="height: 160px">-->
+            <!--<pie-chart options="options2" data="completed"></pie-chart>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;-->
+            <!--<div class="succeed-chart" style="height:160px">-->
+            <!--<pie-chart options="options1" data="failed"></pie-chart>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div collapse="isCollapsedFiltering">-->
+
+
+            <div class="sidebar hidden-md hidden-sm hidden-xs" style="position: fixed; height: 100%;">
+                <!-- Remove 2000px height, for demonstration only -->
+                <div class="sidebar-content">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading ">
+                            <span class="pull-right glyphicon glyphicon-filter"><i class=""></i></span>
+
+                            <h3 class="panel-title">Filtering Options</h3>
+                        </div>
+                        <div class="panel-body fixed-panel">
+
+
+                            <h5><span class="panel-header-margin">Dates Range</span></h5>
+                            <st-Dates-Range-Filter startDate="dates.startDate" endDate="dates.endDate"></st-Dates-Range-Filter>
+
+
+                            <h5><span class="panel-header-margin">Technology</span></h5>
+                            <tag-search options="TechnologyOptions" st-tags-col-name="Technology"></tag-search>
+                            <h5><span class="panel-header-margin">Program</span></h5>
+                            <tag-search options="ProgramOptions" st-tags-col-name="Program"></tag-search>
+                            <h5><span class="panel-header-margin">CycleType</span></h5>
+                            <tag-search options="CycleTypeOptions" st-tags-col-name="CycleType"></tag-search>
+                            <h5><span class="panel-header-margin">Status</span></h5>
+                            <tag-search options="StatusOptions" st-tags-col-name="Status"></tag-search>
+                            <h5><span class="panel-header-margin">Verdict</span></h5>
+                            <tag-search options="VerdictOptions" st-tags-col-name="Verdict"></tag-search>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="container-fluid" style="  margin-top: 7px">
+                <div class="row-fluid right-header">
+                    <div class="col-lg-2">
+                        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+                        <!--<ul class="nav navbar-nav navbar-right">-->
+                        <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><span
+                                        class="glyphicon glyphicon-search"></span></span>
+                            <input type="text" class="form-control" placeholder={{searchPlaceholder}}
+                                   aria-describedby="basic-addon1" st-search={{searchByType}}
+                                   class="input-sm form-control" type="search">
+
+                            <div class="input-group-btn">
+                                <button tabindex="-1" data-toggle="dropdown" class="btn btn-default dropdown-toggle"
+                                        type="button"><span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href ng-click="applyLastSearch()"> my last search</a></li>
+                                    <li><a href ng-click="applyLastSearch()">my last search2</a></li>
+                                    <li><a href ng-click="applyLastSearch()">my last search3</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href ng-click="globalSearch()">Search</a></li>
+                                </ul>
+                                <!--<button type="button" class="btn btn-primary" ng-model="Refresh" btn-checkbox-->
+                                <!--btn-checkbox-true="1" btn-checkbox-false="0">Refresh&nbsp;</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <!--<div class="btn-group" style="left: 94px;">-->
+                        <div class="btn-group" style="position: absolute; left: -7%">
+                            <button type="button" ng-disabled="QueueButtonOff" class="btn btn-primary"
+                                    ng-model="Queue" ng-click="queue()">Queue</button>
+                            <button type="button" ng-disabled="RerunButtonOff" class="btn btn-primary"
+                                    ng-model="Rerun">Rerun</button>
+
+                            <button type="button" ng-disabled="ReportButtonOff" class="btn btn-primary"
+                                    ng-model="Report">Report</button>
+                            <button type="button" ng-disabled="ExecutionButtonOff" class="btn btn-primary"
+                                    ng-model="Execution">Local Execution
+                            </button>
+                            <!--<button type="button" ng-disabled="DesktopButtonOff" class="btn btn-primary"-->
+                            <!--ng-model="Desktop">Desktop-->
+                            <!--</button>-->
+                            <button type="button" ng-disabled="CancelButtonOff" class="btn btn-primary"
+                                    ng-model="Cancel">Cancel Request</button>
+
+                            <button type="button" ng-disabled="RerunButtonOff" class="btn btn-primary"
+                                    ng-model="Rerun">Remote Control</button>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <!--<div st-pagination='' st-items-by-page="itemsByPage" st-displayed-pages="2"></div>-->
+                        <!--<ul class="pagination bootpag" style="left: 34px;">-->
+                        <ul class="pagination bootpag">
+                            <li data-lp="1" class="prev disabled"><a href="javascript:void(0);">«</a></li>
+                            <li data-lp="1" class="active"><a href="javascript:void(0);">1</a></li>
+                            <li data-lp="2"><a href="javascript:void(0);">2</a></li>
+                            <li data-lp="3"><a href="javascript:void(0);">3</a></li>
+                            <li data-lp="4"><a href="javascript:void(0);">4</a></li>
+                            <li data-lp="5"><a href="javascript:void(0);">5</a></li>
+                            <li data-lp="2" class="next"><a href="javascript:void(0);">»</a></li>
+                        </ul>
+
+
+
+                        <!--wrench + statistic toggling would be impleent in phase 2-->
+
+                        <!--<div class="btn-group" style="  position: absolute; left: 10%;">-->
+                        <!--<button type="button" class="btn btn-default" ng-model="selectAll" btn-checkbox-->
+                        <!--btn-checkbox-true="1" btn-checkbox-false="0" ng-click="selectUnselectAll()">{{selectUnselectString}}</button>-->
+                        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+                        <!--<span class="glyphicon glyphicon-wrench"></span></span>-->
+                        <!--<span class="caret"></span></button>-->
+                        <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#" ng-click="isCollapsedStatistics = !isCollapsedStatistics">Toggle statistics</a></li>-->
+                        <!--<li><a href="#">Table Configurations</a></li>-->
+                        <!--<li><a href="#">View Configurations</a></li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="table-wrapper" style="position: relative">
+                    <div class="row-fluid">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered table-hover table-condensed">
+                                <thead>
+
+                                <!--<div class="search-group">-->
+                                <!--<tr>-->
+                                <!--<th colspan="1"><input st-search="Name" placeholder="Name search" class="input-sm form-control" type="search"/></th>-->
+                                <!--&lt;!&ndash;<th colspan="1"><input st-search="Technology" placeholder="tech. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<th colspan="1"><input st-search="Program" placeholder="prog. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<th colspan="1"><input st-search="CycleType" placeholder="cycle type search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                <!--<th colspan="1"><input st-search="Owner" placeholder="Owner search" class="input-sm form-control" type="search"/></th>-->
+                                <!--<th colspan="1"><input st-search="CreatedTime" placeholder="Created Time Search" class="input-sm form-control" type="search"/></th>-->
+                                <!--&lt;!&ndash;<th colspan="1"><input st-search="Status" placeholder="st. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<th colspan="1"><input st-search="Verdict" placeholder="ve. search" class="input-sm form-control" type="search"/></th>&ndash;&gt;-->
+                                <!--</tr>-->
+                                <!--</div>-->
+
+                                <!--<tr  ng-class="{pointer: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">-->
+                                <!--<th><input type="checkbox" ng-click="selectAll()"></th>-->
+                                <!--ng-checked="isSelectedAll()"-->
+
+                                <tr ng-class="{pointer: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+                                    <th st-sort="Name">Name</th>
+                                    <th st-sort="Technology">Technology</th>
+                                    <th st-sort="Program">Program</th>
+                                    <th st-sort="CycleType">CycleType</th>
+                                    <th st-sort="TestBed">TestBed</th>
+                                    <th st-sort="Owner">Owner</th>
+                                    <th id=createdTimeTr st-sort="CreatedTime">CreatedTime</th>
+                                    <th st-sort="Status">Status</th>
+                                    <th st-sort="Verdict">Verdict</th>
+                                </tr>
+
+
+                                </thead>
+                                <tbody>
+                                <!--ng-class="getSelectedClass(row.id)-->
+                                <tr st-select-row="row" st-select-mode="multiple" ng-repeat="row in rowCollection" ng-init="$last && sortByTime()"
+                                    ng-class="{pointer: hover}"  ng-mouseenter="hover = true" ng-mouseleave="hover = false"  >
+
+
+
+                                    <!--<tr ng-class="{pointer: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">-->
+
+                                    <!--{pointer: hover};-->
+
+
+                                    <!--resize-vertical-->
+
+                                    <!--<td> <input type="checkbox" name="selected" ng-checked="isSelected(row.id)" ng-click="updateSelection($event, row.id)"></td>-->
+                                    <td>{{row.Name | uppercase}}</td>
+                                    <td>{{row.Technology | uppercase}}</td>
+                                    <td>{{row.Program | uppercase}}</td>
+                                    <td>{{row.CycleType | uppercase}}</td>
+                                    <td>{{row.TestBed | uppercase}}</td>
+
+                                    <!--<td>-->
+                                    <!--<div><span id="searchItem" rel="popover"> {{row.TestBed | uppercase}}<a id="popoverData" class="btn" href="#" data-content="Popover with data-trigger"-->
+                                    <!--rel="popover" data-placement="bottom" data-original-title="Title" data-trigger="hover">-->
+                                    <!--<span class="glyphicon glyphicon-eye-open"></span></a></span></div></td>-->
+                                    <!--<script>-->
+                                    <!--$(document).ready(function() {-->
+                                    <!--$("#searchItem").popover({-->
+                                    <!--trigger: "hover",-->
+                                    <!--html: true,-->
+                                    <!--animation: true,-->
+                                    <!--content: "ip: 127.0.0.1",-->
+                                    <!--placement: "bottom"-->
+                                    <!--});-->
+
+                                    <!--});-->
+                                    <!--</script>-->
+                                    <td>{{row.Owner | uppercase}}</td>
+                                    <td>{{row.CreatedTime | uppercase}}</td>
+                                    <td><span ng-class="colorStatus(row.Verdict)">{{row.Status | uppercase}}</span></td>
+
+
+                                    <td><span ng-class="colorVerdict(row.Verdict)">{{row.Verdict | uppercase}}</span></td>
+                                </tr>
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+            <!--<div class="col-lg-2"></div>-->
+
+
+            <!--<div class="filter-sidebar col-lg-2">-->
+            <!--&lt;!&ndash;<div class="panel panel-default">&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash; Default panel contents &ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="panel-heading">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="pull-right glyphicon glyphicon-stats"><i class=""></i></span>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<h3 class="panel-title">statistics</h3>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="panel-body">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="users">&ndash;&gt;-->
+            <!--&lt;!&ndash;<h4 style="text-align: center"><span class="glyphicon glyphicon-user"></span> 78 Connected&ndash;&gt;-->
+            <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="charts">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="row-fluid" style="margin: 0; padding: 0;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="completed-chart" style="height: 115px">&ndash;&gt;-->
+            <!--&lt;!&ndash;<pie-chart options="options" data="completed"></pie-chart>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-lg-6" style="margin: 0; padding: 0;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="succeed-chart" style="height:115px">&ndash;&gt;-->
+            <!--&lt;!&ndash;<pie-chart options="options" data="succeed"></pie-chart>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<div class="row-fluid">&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash; &ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <!--<div class="col-lg-2">-->
+    <!--<div class="charts" style="-->
+    <!--width: 200px;-->
+    <!--height: 100px;-->
+    <!--position: fixed;-->
+    <!--top: 19%;-->
+    <!--right: 18%;">-->
+    <!--<div class="users" style="position: absolute;top: -60%;left: 25%;">-->
+    <!--<h5><span class="glyphicon glyphicon-user"></span> 78 Connected</h5>-->
+    <!--</div>-->
+    <!--<pie-chart options="options" data="completed"></pie-chart>-->
+    <!--<pie-chart options="options" data="succeed"></pie-chart>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+
+</div>
+
+</body>
+</html>
